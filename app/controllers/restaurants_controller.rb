@@ -30,14 +30,22 @@ class RestaurantsController < ApplicationController
 
   def update
     @restaurant = Restaurant.find(params[:id])
-    @restaurant.update(restaurant_params)
+    if @restaurant.created_by?(current_user)
+      @restaurant.update(restaurant_params)
+    else
+      flash[:notice] = 'Restaurant can only be edited by creator'
+    end
     redirect_to restaurants_path
   end
 
   def destroy
     @restaurant = Restaurant.find(params[:id])
-    @restaurant.destroy
-    flash[:notice] = 'Restaurant deleted successfully'
+    if @restaurant.created_by?(current_user)
+      @restaurant.destroy
+      flash[:notice] = 'Restaurant deleted successfully'
+    else
+      flash[:notice] = 'Restaurant can only be deleted by creator'
+    end
     redirect_to restaurants_path
   end
 end

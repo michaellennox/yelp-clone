@@ -94,14 +94,14 @@ feature 'restaurants' do
         click_button 'Update Restaurant'
         expect(page).to have_content 'KFC'
         expect(page).not_to have_content 'Kentucky Fried Chicken'
-        expect(page).to have_content 'generic error'
+        expect(page).to have_content 'Restaurant can only be edited by creator'
       end
 
       scenario 'should not be able to delete a restaurant' do
         visit '/restaurants'
         click_link 'Delete KFC'
         expect(page).to have_content 'KFC'
-        expect(page).to have_content 'generic error'
+        expect(page).to have_content 'Restaurant can only be deleted by creator'
       end
     end
   end
