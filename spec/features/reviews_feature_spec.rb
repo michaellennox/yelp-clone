@@ -1,9 +1,9 @@
 require 'rails_helper'
 
 feature 'reviews' do
-  before { Restaurant.create(name: 'KFC') }
+  before(:each) { Restaurant.create(name: 'KFC') }
 
-  scenario 'allows users to leave a review using a form' do
+  scenario 'a user should be able to leave a review via a form' do
     visit '/restaurants'
     click_link 'Review KFC'
     fill_in 'Thoughts', with: 'so so'
