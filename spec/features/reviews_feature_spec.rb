@@ -34,4 +34,14 @@ feature 'reviews' do
       expect(page).to have_content 'You cannot review the same restaurant more than once'
     end
   end
+
+  context 'while user is not signed in' do
+    before(:each) { Restaurant.create(name: 'KFC') }
+
+    scenario 'a user should not be able to leave a review' do
+      visit '/restaurants'
+      click_link 'Review KFC'
+      expect(current_path).to eq '/users/sign_in'
+    end
+  end
 end
