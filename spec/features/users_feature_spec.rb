@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-feature 'User' do
+feature 'users' do
   context 'when not signed in and on the homepage' do
     it 'should see a sign in and a sign up link' do
       visit '/'
