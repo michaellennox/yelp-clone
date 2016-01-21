@@ -4,9 +4,9 @@ feature 'reviews' do
   scenario 'an average rating for all reviews should be displayed' do
     restaurant = Restaurant.create(name: 'kfc')
     Review.create(restaurant: restaurant, rating: 5)
-    Review.create(restaurant: restaurant, rating: 4)
+    Review.create(restaurant: restaurant, rating: 3)
     visit '/restaurants'
-    expect(page).to have_content('Average rating: 4')
+    expect(page).to have_content("Average rating: \u2605\u2605\u2605\u2605\u2606")
   end
 
   context 'while user is signed in' do

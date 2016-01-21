@@ -1,11 +1,11 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe Restaurant, type: :model do
   it { is_expected.to have_many :reviews }
   it { is_expected.to belong_to :user }
   it { is_expected.to validate_length_of(:name).is_at_least(3) }
   it { is_expected.to validate_uniqueness_of(:name) }
-
+  
   describe '#created_by?' do
     let!(:this_user) do
       User.create(email: 'test@example.com',
