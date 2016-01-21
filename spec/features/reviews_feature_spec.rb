@@ -8,40 +8,43 @@ feature 'reviews' do
     end
 
     scenario 'a user should be able to leave a review via a form' do
-      visit '/restaurants'
-      click_link 'Review KFC'
-      fill_in 'Thoughts', with: 'so so'
-      select '3', from: 'Rating'
-      click_button 'Leave Review'
-
+      leave_review
       expect(current_path).to eq '/restaurants'
       expect(page).to have_content('so so')
     end
 
     scenario 'a user should not be able to review multiple times' do
-      visit '/restaurants'
-      click_link 'Review KFC'
-      fill_in 'Thoughts', with: 'so so'
-      select '3', from: 'Rating'
-      click_button 'Leave Review'
-
-      click_link 'Review KFC'
-      fill_in 'Thoughts', with: 'epicsauce'
-      select '5', from: 'Rating'
-      click_button 'Leave Review'
-
+      leave_review
+      leave_review(thoughts: 'epicsauce')
       expect(page).not_to have_content 'epicsauce'
       expect(page).to have_content 'You cannot review the same restaurant more than once'
+    end
+
+    scenario 'a user should be able to delete their own review' do
+      leave_review
+      click_link 'KFC'
+      click_link 'Delete Review'
+      expect(page).not_to have_content 'so so'
+      expect(page).to have_content 'Review deleted successfully'
     end
   end
 
   context 'while user is not signed in' do
-    before(:each) { Restaurant.create(name: 'KFC') }
+    before(:each) do
+      kfc = Restaurant.create(name: 'KFC')
+      Review.create(restaurant: kfc, rating: 5)
+    end
 
     scenario 'a user should not be able to leave a review' do
       visit '/restaurants'
       click_link 'Review KFC'
       expect(current_path).to eq '/users/sign_in'
+    end
+
+    scenario 'the delete button should not be visible on a review' do
+      visit '/restaurants'
+      click_link 'KFC'
+      expect(page).not_to have_link 'Delete Review'
     end
   end
 end

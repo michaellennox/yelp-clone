@@ -14,4 +14,12 @@ module Helpers
     fill_in 'Name', with: 'KFC'
     click_button 'Create Restaurant'
   end
+
+  def leave_review(restaurant: 'KFC', thoughts: 'so so', rating: 3)
+    visit '/restaurants'
+    click_link "Review #{restaurant}"
+    fill_in 'Thoughts', with: thoughts
+    select rating, from: 'Rating'
+    click_button 'Leave Review'
+  end
 end
