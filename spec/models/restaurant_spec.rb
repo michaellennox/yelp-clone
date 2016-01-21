@@ -23,4 +23,18 @@ describe Restaurant, type: :model do
       expect(restaurant.created_by?(this_user)).to be false
     end
   end
+
+  describe '#average_rating' do
+    let!(:restaurant) { Restaurant.create(name: 'katsu king') }
+
+    it 'should return "N/A" when no reviews' do
+      expect(restaurant.average_rating).to eq 'N/A'
+    end
+
+    it 'should return the average of reviews' do
+      restaurant.reviews.create(rating: 5)
+      restaurant.reviews.create(rating: 1)
+      expect(restaurant.average_rating).to eq 3
+    end
+  end
 end

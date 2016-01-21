@@ -1,6 +1,14 @@
 require 'rails_helper'
 
 feature 'reviews' do
+  scenario 'an average rating for all reviews should be displayed' do
+    restaurant = Restaurant.create(name: 'kfc')
+    Review.create(restaurant: restaurant, rating: 5)
+    Review.create(restaurant: restaurant, rating: 4)
+    visit '/restaurants'
+    expect(page).to have_content('Average rating: 4')
+  end
+
   context 'while user is signed in' do
     before(:each) do
       sign_up
