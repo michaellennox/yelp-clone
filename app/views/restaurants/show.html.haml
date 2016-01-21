@@ -11,6 +11,8 @@
       = review.thoughts
       %strong= review.rating
       \/5
+      %p= pluralize review.endorsements.count, "endorsement"
+      = link_to "Endorse Review", review_endorsements_path(review), method: :post
     - if current_user&.has_reviewed?(@restaurant)
       = link_to "Delete Review", review_path(review), method: :delete
 - else
