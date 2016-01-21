@@ -18,6 +18,7 @@ feature 'reviews' do
     scenario 'a user should be able to leave a review via a form' do
       leave_review
       expect(current_path).to eq '/restaurants'
+      click_link 'KFC'
       expect(page).to have_content('so so')
     end
 
