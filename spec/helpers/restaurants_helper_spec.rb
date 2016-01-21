@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe ReviewsHelper, type: :helper do
+describe RestaurantsHelper, type: :helper do
   describe '#star_rating' do
     it 'when passed "N/A", returns N/A' do
       expect(helper.star_rating('N/A')).to eq 'N/A'
